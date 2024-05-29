@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>URL Form</h1>
+  <form action="/submit" method="POST">
+    <label for="url">Enter a URL:</label>
+    <input type="url" id="url" name="url" required>
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+{% endblock content%}
+
