@@ -21,7 +21,8 @@ def index():
 
 
 @app.route("/video/info/", methods = ["GET", "POST"])
-def submit():
+@app.route("/video/<link>/", methods = ["GET", "POST"])
+def submit(link):
     """
     This function is a route handler for the "/submit/" route. It handles both GET and POST requests.
     
@@ -31,12 +32,14 @@ def submit():
     Returns:
     - If the request method is POST:
         - If the URL is successfully fetched and parsed:
-            - Returns a JSON response containing the URL, title, and thumbnail URL of the YouTube video.
+            - Returns a JSON response containing the information of the YouTube video.
         - If the URL is not provided or cannot be fetched:
             - Returns a redirect to the "internal_server_error" route.
     - If the request method is GET:
         - Returns a redirect to the "internal_server_error" route.
     """
+    aa = YouTube(link)
+    print(aa.title)
     
     if request.method == "POST":
         url = request.form.get('url')
@@ -45,17 +48,25 @@ def submit():
         video_id = video.video_id
         tumbnail = video.thumbnail_url
         channel_url = video.channel_url
+
+        #more attributes added later
         data = {"video_url": url,
+                "author": video.author,
                  "title": title, 
                  "tumbnail":tumbnail, 
                  "channel_url": channel_url,
-                 "video_id": video_id
+                 "video_id": video_id, 
+                 "duration": video.length
                 }
+        #https://img.youtube.com/vi/pj1iLRljwxI/default.jpg
         return jsonify(data)
     else:
         return redirect(url_for("internal_server_error"))
 
+def generate_tumbnail(id:str):
+    return 
 @app.route("/download/", methods = ["POST"])
+
 def download():
     pass
 
