@@ -1,10 +1,7 @@
 from server import app
-from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
-def api(app):
-    api = Api(app)
-    return api
+
 
 def secret_key_config(secret_key:str) -> None:
     """
